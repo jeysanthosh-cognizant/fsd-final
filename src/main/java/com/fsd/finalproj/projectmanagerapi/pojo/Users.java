@@ -1,16 +1,21 @@
 package com.fsd.finalproj.projectmanagerapi.pojo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Users {
 
     @Id
+    @GeneratedValue
     private int userId;
     private String firstName;
     private String lastName;
     private int employeeId;
+
+    @Column(name = "project_id", unique = true, nullable = false)
     private int projectId;
     private int taskId;
 

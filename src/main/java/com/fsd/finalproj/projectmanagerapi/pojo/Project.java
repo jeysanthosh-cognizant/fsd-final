@@ -2,6 +2,7 @@ package com.fsd.finalproj.projectmanagerapi.pojo;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Date;
 
@@ -9,6 +10,7 @@ import java.sql.Date;
 public class Project {
 
     @Id
+    @GeneratedValue
     private int projectId;
     private String project;
     private Date startDate;
