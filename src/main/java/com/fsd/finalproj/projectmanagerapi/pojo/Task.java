@@ -1,6 +1,7 @@
 package com.fsd.finalproj.projectmanagerapi.pojo;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.sql.Date;
 
@@ -8,9 +9,10 @@ import java.sql.Date;
 public class Task {
 
     @Id
+    @GeneratedValue
     private int taskId;
     private int parentId;
-    private int projetId;
+    private int projectId;
     private String task;
     private Date startDate;
     private Date endDate;
@@ -33,12 +35,12 @@ public class Task {
         this.parentId = parentId;
     }
 
-    public int getProjetId() {
-        return projetId;
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProjetId(int projetId) {
-        this.projetId = projetId;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public String getTask() {

@@ -5,6 +5,7 @@ import com.fsd.finalproj.projectmanagerapi.dao.UsersDao;
 import com.fsd.finalproj.projectmanagerapi.pojo.Task;
 
 import com.fsd.finalproj.projectmanagerapi.pojo.Users;
+import com.fsd.finalproj.projectmanagerapi.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,20 +19,26 @@ import java.util.List;
 public class ProjectManagerController {
 
     @Autowired
-    private TaskDao taskDao;
+    private TaskService taskService;
 
-    @Autowired
-    private UsersDao usersDao;
+    /*@Autowired
+    private UsersDao usersDao;*/
 
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     public List<Task> getAllTasks(){
 
-        List<Task> tasks = new ArrayList<>();
+       // List<Task> tasks = new ArrayList<>();
 
-        return (List<Task>)taskDao.findAll();
+        return taskService.getAllTasks();
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/tasks", method = RequestMethod.POST)
+    public List<Task> addTask(@RequestBody Task task ){
+
+        return taskService.saveTask(task);
+    }
+
+    /*@RequestMapping(value = "/users", method = RequestMethod.POST)
     public List<Users> addUser(@RequestBody Users user){
 
         this.usersDao.save(user);
@@ -43,5 +50,5 @@ public class ProjectManagerController {
     public List<Users> getAllUsers(){
 
         return (List<Users>)this.usersDao.findAll();
-    }
+    }*/
 }
