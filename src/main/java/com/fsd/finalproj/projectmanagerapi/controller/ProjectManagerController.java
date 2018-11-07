@@ -2,10 +2,13 @@ package com.fsd.finalproj.projectmanagerapi.controller;
 
 import com.fsd.finalproj.projectmanagerapi.dao.TaskDao;
 import com.fsd.finalproj.projectmanagerapi.dao.UsersDao;
+import com.fsd.finalproj.projectmanagerapi.pojo.Project;
 import com.fsd.finalproj.projectmanagerapi.pojo.Task;
 
 import com.fsd.finalproj.projectmanagerapi.pojo.Users;
+import com.fsd.finalproj.projectmanagerapi.service.ProjectService;
 import com.fsd.finalproj.projectmanagerapi.service.TaskService;
+import com.fsd.finalproj.projectmanagerapi.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +24,11 @@ public class ProjectManagerController {
     @Autowired
     private TaskService taskService;
 
-    /*@Autowired
-    private UsersDao usersDao;*/
+    @Autowired
+    private UsersService usersService;
+
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     public List<Task> getAllTasks(){
@@ -38,17 +44,25 @@ public class ProjectManagerController {
         return taskService.saveTask(task);
     }
 
-    /*@RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public List<Users> addUser(@RequestBody Users user){
 
-        this.usersDao.save(user);
-
-        return (List<Users>)this.usersDao.findAll();
+        return this.usersService.saveUser(user);
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<Users> getAllUsers(){
 
-        return (List<Users>)this.usersDao.findAll();
-    }*/
+        return this.usersService.getAllUsers();
+    }
+
+    @RequestMapping(value = "/projects", method = RequestMethod.POST)
+    public List<Project> addProject(@RequestBody Project project){
+        return this.projectService.saveProject(project);
+    }
+
+    @RequestMapping(value = "/projects", method = RequestMethod.GET)
+    public List<Project> getAllProjects(){
+        return this.projectService.getAllProjects();
+    }
 }

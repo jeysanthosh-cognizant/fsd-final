@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsd.finalproj.projectmanagerapi.AbstractTest;
 import com.fsd.finalproj.projectmanagerapi.ProjectManagerApiApplication;
+import com.fsd.finalproj.projectmanagerapi.pojo.Project;
 import com.fsd.finalproj.projectmanagerapi.pojo.Task;
 import com.fsd.finalproj.projectmanagerapi.pojo.Users;
 
@@ -24,6 +25,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
 import java.awt.print.Book;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -54,6 +57,40 @@ public class ProjectManagerControllerTest extends AbstractTest{
         testUSer.setLastName("Doe");
         testUSer.setEmployeeId(123456);
 
+        MvcResult result =  mvc.perform(MockMvcRequestBuilders.post("/users").contentType(MediaType.APPLICATION_JSON).content(super.mapToJson(testUSer))).andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+
+        assertTrue(result.getResponse().getStatus()==200);
+    }
+
+    @Test
+    public void getAllUsers() throws Exception {
+        MvcResult result =  mvc.perform(MockMvcRequestBuilders.get("/users").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+        List<Users> userlist = (List<Users>)mapFromJson(result.getResponse().getContentAsString(),Object.class);
+        assertTrue(userlist.size() > 0);
+    }
+
+    @Test
+    public void addProject() throws Exception {
+
+        Project testProject = new Project();
+        testProject.setProjectId(1);
+        testProject.setProject("Test Project");
+        Date startDate = Date.valueOf(LocalDate.now());
+        Date endDate = Date.valueOf(LocalDate.now().plusDays(7));
+        testProject.setStartDate(startDate);
+        testProject.setEndDate(endDate);
+        testProject.setPriority(1);
+
+        MvcResult result =  mvc.perform(MockMvcRequestBuilders.post("/projects").contentType(MediaType.APPLICATION_JSON).content(super.mapToJson(testProject))).andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+
+        assertTrue(result.getResponse().getStatus()==200);
+    }
+
+    @Test
+    public void getAllProjects() throws Exception {
+        MvcResult result =  mvc.perform(MockMvcRequestBuilders.get("/projects").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+        List<Project> projectlist = (List<Project>)mapFromJson(result.getResponse().getContentAsString(),Object.class);
+        assertTrue(projectlist.size() > 0);
     }
 
 }
