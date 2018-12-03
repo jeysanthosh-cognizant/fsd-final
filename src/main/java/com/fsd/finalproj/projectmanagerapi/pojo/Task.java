@@ -1,8 +1,8 @@
 package com.fsd.finalproj.projectmanagerapi.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -18,6 +18,20 @@ public class Task {
     private Date endDate;
     private int priority;
     private String status;
+
+    @JsonManagedReference
+    private Users user;
+
+    /**
+     * Parentask field
+     */
+    @JoinColumn(name="Parent_Id",nullable=true,insertable=true,updatable=true)
+    private ParentTask parentTask;
+    /**
+     * task field
+     */
+    @JoinColumn(name="Project_Id",nullable=false,insertable=true,updatable=true)
+    private Project project;
 
     public int getTaskId() {
         return taskId;
@@ -81,5 +95,31 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * @return the project
+     */
+    public Project getProject() {
+        return project;
+    }
+    /**
+     * @param project the project to set
+     */
+    public void setProject(final Project project) {
+        this.project = project;
+    }
+
+    /**
+     * @return the user
+     */
+    public Users getUser() {
+        return user;
+    }
+    /**
+     * @param user the user to set
+     */
+    public void setUser(final Users user) {
+        this.user = user;
     }
 }
