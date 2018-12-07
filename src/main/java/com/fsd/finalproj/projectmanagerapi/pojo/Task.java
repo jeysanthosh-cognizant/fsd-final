@@ -1,6 +1,8 @@
 package com.fsd.finalproj.projectmanagerapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -10,54 +12,51 @@ public class Task {
 
     @Id
     @GeneratedValue
-    private int taskId;
-    private int parentId;
-    private int projectId;
+    private long taskId;
+
     private String task;
     private Date startDate;
     private Date endDate;
-    private int priority;
+    private long priority;
     private String status;
 
     @JsonManagedReference
+    @OneToOne(fetch = FetchType.EAGER, mappedBy="task")
     private Users user;
+
+    public ParentTask getParentTask() {
+        return parentTask;
+    }
+
+    public void setParentTask(ParentTask parentTask) {
+        this.parentTask = parentTask;
+    }
 
     /**
      * Parentask field
      */
-    @JoinColumn(name="Parent_Id",nullable=true,insertable=true,updatable=true)
+
+    @ManyToOne
+    @JoinColumn(name="parentId",nullable=true,insertable=true,updatable=true)
+    @NotFound(action = NotFoundAction.IGNORE)
     private ParentTask parentTask;
     /**
      * task field
      */
-    @JoinColumn(name="Project_Id",nullable=false,insertable=true,updatable=true)
+
+    @ManyToOne
+    @JoinColumn(name="projectId",nullable=false,insertable=true,updatable=true)
     private Project project;
 
-    public int getTaskId() {
+    public long getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(long taskId) {
         this.taskId = taskId;
     }
 
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getTask() {
+     public String getTask() {
         return task;
     }
 
@@ -81,11 +80,11 @@ public class Task {
         this.endDate = endDate;
     }
 
-    public int getPriority() {
+    public long getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(long priority) {
         this.priority = priority;
     }
 

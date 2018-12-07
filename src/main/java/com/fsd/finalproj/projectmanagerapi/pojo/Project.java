@@ -13,28 +13,29 @@ public class Project {
 
     @Id
     @GeneratedValue
-    private int projectId;
+    private long projectId;
     private String project;
     private Date startDate;
     private Date endDate;
-    private int priority;
+    private long priority;
 
+    @OneToMany(cascade= {CascadeType.ALL} , fetch = FetchType.EAGER, mappedBy="project")
     @JsonIgnore
     private Set<Task> taskSet;
 
-    @Formula("(select count(distinct t.task_id) from test.task t where t.project_id=project_id)")
+    @Formula("(select count(distinct t.task_id) from fsd.task t where t.project_id=project_id)")
     private int numberOfTasks;
 
-    @Formula("(select count(distinct t.task_id) from test.task t where t.project_id=project_id and t.status='Completed')")
+    @Formula("(select count(distinct t.task_id) from fsd.task t where t.project_id=project_id and t.status='Completed')")
     private int completedTasks;
-
+    @OneToOne(cascade= {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH} ,fetch = FetchType.EAGER, mappedBy = "project")
     Users user;
 
-    public int getProjectId() {
+    public long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
 
@@ -62,11 +63,11 @@ public class Project {
         this.endDate = endDate;
     }
 
-    public int getPriority() {
+    public long getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(long priority) {
         this.priority = priority;
     }
 

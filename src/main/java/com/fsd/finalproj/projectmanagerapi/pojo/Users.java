@@ -10,30 +10,28 @@ public class Users {
 
     @Id
     @GeneratedValue
-    private int userId;
+    private long userId;
     private String firstName;
     private String lastName;
-    private int employeeId;
+    private long employeeId;
 
-    @Column(name = "project_id", unique = true, nullable = false)
-    private int projectId;
-    private int taskId;
-
-    @JoinColumn(name="Project_Id",nullable=true,insertable=false,updatable=true)
+    @OneToOne
+    @JoinColumn(name="project_id",nullable=true,insertable=false,updatable=true)
     @JsonIgnore
     //@JsonBackReference
     private Project project;
 
-    @JoinColumn(name="Task_Id",nullable=true,insertable=false,updatable=true)
+    @OneToOne
+    @JoinColumn(name="taskId",nullable=true,insertable=false,updatable=true)
     //@JsonIgnore
     @JsonBackReference
     private Task task;
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -53,28 +51,12 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public int getEmployeeId() {
+    public long getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(long employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public int getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
     }
 
     /**

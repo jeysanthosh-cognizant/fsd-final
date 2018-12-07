@@ -61,7 +61,7 @@ public abstract class AbstractTest {
 
             List<Task> taskList = new ArrayList<>();
             taskList.add(mockTask);
-            BDDMockito.given(taskService.getAllTasks()).willReturn(taskList);
+            BDDMockito.given(taskService.viewTasks()).willReturn(taskList);
 
             List<Users> mockUsers = new ArrayList<>();
             Users mockUser = new Users();
@@ -70,7 +70,7 @@ public abstract class AbstractTest {
             mockUser.setUserId(1);
             mockUsers.add(mockUser);
 
-            BDDMockito.given(usersService.getAllUsers()).willReturn(mockUsers);
+            BDDMockito.given(usersService.viewUsers()).willReturn(mockUsers);
 
             Project project = new Project();
             project.setProjectId(1);
@@ -83,7 +83,7 @@ public abstract class AbstractTest {
 
             List<Project> projects = new ArrayList<>();
             projects.add(project);
-            BDDMockito.given(projectService.getAllProjects()).willReturn(projects);
+            BDDMockito.given(projectService.viewProjects()).willReturn(projects);
         }
         protected String mapToJson(Object obj) throws JsonProcessingException {
             ObjectMapper objectMapper = new ObjectMapper();
