@@ -89,14 +89,7 @@ public class Users {
                 + employeeId + "]";
     }
 
-    @Override
-    public int hashCode() {
-        final long prime = 31;
-        long result = 1;
-        result = prime * result + employeeId;
-        result = prime * result + userId;
-        return (int)result;
-    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

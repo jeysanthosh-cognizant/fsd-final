@@ -93,7 +93,7 @@ public class ProjectManagerController {
         return this.projectService.viewProjects();
     }
 
-    @RequestMapping(value = "/tasks", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/tasks", method = RequestMethod.POST)
     public String addTask(@RequestBody Task task){
         taskService.addTask(task);
         String responseMsg = messageSource.getMessage("ADDTASK_MESSAGE_SUCCESS", new Object[] {task.getTask()}, Locale.US);
@@ -151,5 +151,5 @@ public class ProjectManagerController {
             return taskList;
         }
         return this.taskService.viewTasks();
-    }
+    }*/
 }

@@ -5,14 +5,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsd.finalproj.projectmanagerapi.controller.ProjectManagerController;
+import com.fsd.finalproj.projectmanagerapi.dao.ParentTaskDao;
+import com.fsd.finalproj.projectmanagerapi.dao.ProjectDao;
 import com.fsd.finalproj.projectmanagerapi.dao.TaskDao;
 import com.fsd.finalproj.projectmanagerapi.dao.UsersDao;
 import com.fsd.finalproj.projectmanagerapi.pojo.Project;
 import com.fsd.finalproj.projectmanagerapi.pojo.Task;
 import com.fsd.finalproj.projectmanagerapi.pojo.Users;
+import com.fsd.finalproj.projectmanagerapi.service.ParentTaskService;
 import com.fsd.finalproj.projectmanagerapi.service.ProjectService;
 import com.fsd.finalproj.projectmanagerapi.service.TaskService;
 import com.fsd.finalproj.projectmanagerapi.service.UsersService;
+import junitparams.JUnitParamsRunner;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
@@ -36,7 +40,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
+@RunWith(JUnitParamsRunner.class)
 @WebMvcTest(controllers = {ProjectManagerController.class}, secure = false)
 @ContextConfiguration(classes = ProjectManagerApiApplication.class)
 public abstract class AbstractTest {
@@ -45,14 +49,28 @@ public abstract class AbstractTest {
         protected MockMvc mvc;
 
         @MockBean
-        TaskService taskService;
-
-        @MockBean
         UsersService usersService;
 
         @MockBean
         ProjectService projectService;
 
+        @MockBean
+        TaskService taskService;
+
+        @MockBean
+        ParentTaskService parentTaskService;
+
+        @MockBean
+        UsersDao usersDao;
+
+        @MockBean
+        TaskDao taskDao;
+
+        @MockBean
+        ParentTaskDao parentTaskDao;
+
+        @MockBean
+        ProjectDao projectDao;
 
         protected void setUp() {
            // mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
