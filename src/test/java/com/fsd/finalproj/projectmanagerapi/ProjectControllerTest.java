@@ -202,7 +202,7 @@ public class ProjectControllerTest extends AbstractTest{
 	public void testSortAllProjects(List<Project> expectedLstproject,int sortType) throws Exception{
 		BDDMockito.given(projectService.sortProjects(sortType)).willReturn(lstProjects);
 
-		MvcResult result = mvc.perform(get("/projects?sortType="+sortType)
+		MvcResult result = mvc.perform(get("/projects?sorttype="+sortType)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andReturn();
 		// .andExpect(jsonPath("$[0].title", is("SpringTest")));

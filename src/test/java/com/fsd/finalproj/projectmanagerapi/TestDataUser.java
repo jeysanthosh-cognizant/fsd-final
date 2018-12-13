@@ -98,7 +98,7 @@ public class TestDataUser {
 		userList.add(user1);
 		userList.add(user2);
 		return (new Object[][]{
-				{userList,1},{userList,2},{userList,3}
+				{userList,1},{userList,2},{userList,3},{userList,4}
 		}
 				);
 	}

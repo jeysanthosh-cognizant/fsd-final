@@ -11,26 +11,27 @@ import com.fsd.finalproj.projectmanagerapi.service.TaskService;
 import com.fsd.finalproj.projectmanagerapi.service.UsersService;
 import junitparams.JUnitParamsRunner;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(JUnitParamsRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = ProjectManagerApiApplication.class)
+@SpringBootTest(classes = ProjectManagerApiApplication.class)
+//@ContextConfiguration(classes = ProjectManagerApiApplication.class)
 public abstract class AbstractServiceTest {
 
-    @MockBean
+    @Autowired
     UsersService usersService;
 
-    @MockBean
+    @Autowired
     ProjectService projectService;
 
-    @MockBean
+    @Autowired
     TaskService taskService;
 
-    @MockBean
+    @Autowired
     ParentTaskService parentTaskService;
 
     @MockBean

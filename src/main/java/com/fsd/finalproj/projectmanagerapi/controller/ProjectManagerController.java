@@ -1,7 +1,5 @@
 package com.fsd.finalproj.projectmanagerapi.controller;
 
-import com.fsd.finalproj.projectmanagerapi.dao.TaskDao;
-import com.fsd.finalproj.projectmanagerapi.dao.UsersDao;
 import com.fsd.finalproj.projectmanagerapi.pojo.ParentTask;
 import com.fsd.finalproj.projectmanagerapi.pojo.Project;
 import com.fsd.finalproj.projectmanagerapi.pojo.Task;
@@ -93,21 +91,17 @@ public class ProjectManagerController {
         return this.projectService.viewProjects();
     }
 
-    /*@RequestMapping(value = "/tasks", method = RequestMethod.POST)
-    public String addTask(@RequestBody Task task){
-        taskService.addTask(task);
-        String responseMsg = messageSource.getMessage("ADDTASK_MESSAGE_SUCCESS", new Object[] {task.getTask()}, Locale.US);
-        return responseMsg;
+    @RequestMapping(value = "/tasks", method = RequestMethod.POST)
+    public List<Task> addTask(@RequestBody Task task){
+        return  this.taskService.addTask(task);
     }
 
     @RequestMapping(value = "/parenttask",
             method = RequestMethod.POST,produces = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public String addParentTask(@RequestBody ParentTask parentTask){
-        taskService.addParentTask(parentTask);
-        String responseMsg = messageSource.getMessage("PARENT_TASK_MESSAGE_SUCCESS", new Object[] {parentTask.getParentTask()},Locale.US);
-        return responseMsg;
+    public List<ParentTask> addParentTask(@RequestBody ParentTask parentTask){
+        //taskService.addParentTask(parentTask);
+       // String responseMsg = messageSource.getMessage("PARENT_TASK_MESSAGE_SUCCESS", new Object[] {parentTask.getParentTask()},Locale.US);
+        return this.taskService.addParentTask(parentTask);
     }
 
     @RequestMapping(value = "/parenttask",
@@ -119,10 +113,8 @@ public class ProjectManagerController {
     }
 
     @RequestMapping(value = "/tasks", method = RequestMethod.PUT)
-    public String saveTask(@RequestBody Task task){
-        taskService.editTask(task);
-        String responseMsg = messageSource.getMessage("EDITTASK_MESSAGE_SUCCESS", new Object[] {task.getTask()},Locale.US);
-        return responseMsg;
+    public List<Task> saveTask(@RequestBody Task task){
+        return this.taskService.editTask(task);
     }
 
     @RequestMapping(value = "/tasks", method = RequestMethod.DELETE)
@@ -143,13 +135,13 @@ public class ProjectManagerController {
             return this.taskService.searchTaskByName(taskName);
         }
         if(projectId!=null){
-            return taskService.searchTaskByProjectId(projectId);
+            return this.taskService.searchTaskByProjectId(projectId);
         }
         if(taskId!=null){
             List<Task> taskList = new ArrayList<>();
-            taskList.add(taskService.searchTaskByTaskId(taskId));
+            taskList.add(this.taskService.searchTaskByTaskId(taskId));
             return taskList;
         }
         return this.taskService.viewTasks();
-    }*/
+    }
 }

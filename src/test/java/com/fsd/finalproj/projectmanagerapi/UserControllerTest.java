@@ -185,7 +185,7 @@ public class UserControllerTest extends AbstractTest {
     @junitparams.Parameters(source= TestDataUser.class, method = "provideUsersForSort")
     public void testSortAllUsers(List<Users> expectedLstuser,int sortType) throws Exception{
     	BDDMockito.given(usersService.sortUsers(sortType)).willReturn(lstUsers);
-      	MvcResult result = mvc.perform(get("/users?sortType="+sortType)
+      	MvcResult result = mvc.perform(get("/users?sorttype="+sortType)
       		      .contentType(MediaType.APPLICATION_JSON))
       		      .andExpect(status().isOk()).andReturn();
       		     // .andExpect(jsonPath("$[0].title", is("SpringTest")));
@@ -206,7 +206,7 @@ public class UserControllerTest extends AbstractTest {
     @junitparams.Parameters(source= TestDataUser.class, method = "provideSearchByName")
     public void testSearchUserByName(List<Users> expectedUserLst,String searchUserName) throws Exception{
     	BDDMockito.given(usersService.searchUserByName(searchUserName)).willReturn(expectedUserLst);
-      	MvcResult result = mvc.perform(get("/users?userName="+searchUserName)
+      	MvcResult result = mvc.perform(get("/users?name="+searchUserName)
       		      .contentType(MediaType.APPLICATION_JSON))
       		      .andExpect(status().isOk()).andReturn();
       		     // .andExpect(jsonPath("$[0].title", is("SpringTest")));

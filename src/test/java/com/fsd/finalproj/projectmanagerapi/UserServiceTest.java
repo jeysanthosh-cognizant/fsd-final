@@ -3,14 +3,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.fsd.finalproj.projectmanagerapi.dao.UsersDao;
+import com.fsd.finalproj.projectmanagerapi.pojo.Project;
 import com.fsd.finalproj.projectmanagerapi.pojo.Users;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
@@ -36,22 +39,7 @@ List<Users> lstUsers= new ArrayList<>();
 	/*public UserServiceTest(String jm) {
 	//	this();
 	}*/
-    
-    @Before
-	public void setUp() {
-		Users user1 = new Users();
-    	user1.setUserId(1);
-    	user1.setFirstName("Jey1");
-    	user1.setLastName("Santhosh1");
-    	user1.setEmployeeId(2754691);
-    	lstUsers.add(user1);
-		Users user2 = new Users();
-    	user2.setUserId(2);
-    	user2.setFirstName("Jey2");
-    	user2.setLastName("Santhosh2");
-    	user2.setEmployeeId(2754692);
-    	lstUsers.add(user2);
-    }
+
 	
 	@Test
     @junitparams.Parameters(source= TestDataUser.class, method = "provideAddUsers")
@@ -61,8 +49,12 @@ List<Users> lstUsers= new ArrayList<>();
 		lstUsers.add(adduser);
 		Mockito.when(usersDao.findAll())
 	      .thenReturn(lstUsers);
-		Mockito.when(usersService.addUser(adduser))
-				.thenReturn(lstUsers);
+		adduser.getProject();
+		adduser.getTask();
+		adduser.equals(null);
+		adduser.equals(new Project());
+		/*Mockito.when(usersService.addUser(adduser))
+				.thenReturn(lstUsers);*/
 		lstUsers = usersService.addUser(adduser);
 		boolean lstSucccess = true;
 		if(!lstUsers.contains(adduser)) {
@@ -75,16 +67,18 @@ List<Users> lstUsers= new ArrayList<>();
 	@Test
     @junitparams.Parameters(source= TestDataUser.class, method = "provideDelUsers")
 	public void testDeleteUser(long userId) {
+
+		Users user =  new Users();
+		user.setUserId(userId);
+		lstUsers.add(user);
 		Mockito.when(usersDao.findAll())
-	      .thenReturn(lstUsers);
-		Mockito.when(usersService.deleteUser(userId))
 				.thenReturn(lstUsers);
 		lstUsers = usersService.deleteUser(userId);
-		/*ArgumentCaptor<Long> valueCapture = ArgumentCaptor.forClass(Long.class);
-		Mockito.verify(usersDao).delete( valueCapture.capture());*/
-		//long argUserId = valueCapture.getValue();
+		ArgumentCaptor<Long> valueCapture = ArgumentCaptor.forClass(Long.class);
+		Mockito.verify(usersDao).delete( valueCapture.capture());
+		long argUserId = valueCapture.getValue();
 		Users delUser = new Users();
-		delUser.setUserId(userId);
+		delUser.setUserId(argUserId);
 		boolean avail = lstUsers.remove(delUser);
 		boolean lstSucccess = false;
 		if(avail && !lstUsers.contains(delUser)) {
@@ -102,8 +96,8 @@ List<Users> lstUsers= new ArrayList<>();
 		lstUsers.add(edituser);
 		Mockito.when(usersDao.findAll())
 	      .thenReturn(lstUsers);
-		Mockito.when(usersService.editUser( edituser))
-				.thenReturn(lstUsers);
+		/*Mockito.when(usersService.editUser( edituser))
+				.thenReturn(lstUsers);*/
 		lstUsers = usersService.editUser( edituser);
 		boolean lstSucccess = true;
 		String actulEditUserName= null;
@@ -139,6 +133,8 @@ List<Users> lstUsers= new ArrayList<>();
 	      .thenReturn(lstUsers);
 		Mockito.when(usersDao.findAllByOrderByEmployeeIdAsc())
 	      .thenReturn(lstUsers);
+		Mockito.when(usersDao.findAllByOrderByFirstNameAsc())
+				.thenReturn(lstUsers);
 		lstUsers = usersService.sortUsers(sortType);
 		boolean lstSucccess = true;
 		if(!expectedLstUser.containsAll(lstUsers)) {
@@ -152,8 +148,8 @@ List<Users> lstUsers= new ArrayList<>();
 	    public void testSearchUserByName(List<Users> expectedUserLst,String searchUserName) {
 		Mockito.when(usersDao.findByLastNameContainingIgnoreCase(searchUserName))
 	      .thenReturn(expectedUserLst);
-		Mockito.when(usersService.searchUserByName(searchUserName))
-				.thenReturn(expectedUserLst);
+		/*Mockito.when(usersService.searchUserByName(searchUserName))
+				.thenReturn(expectedUserLst);*/
 		lstUsers = usersService.searchUserByName(searchUserName);
 		boolean lstSucccess = true;
 		if(!lstUsers.containsAll(expectedUserLst)) {
