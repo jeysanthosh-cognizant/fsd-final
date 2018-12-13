@@ -1,0 +1,48 @@
+CREATE TABLE `users` (
+	`user_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`first_name` VARCHAR(50) NULL DEFAULT NULL,
+	`last_name` VARCHAR(50) NULL DEFAULT NULL,
+	`employee_id` INT(11) NULL DEFAULT NULL,
+	`project_id` INT(11) NULL DEFAULT NULL,
+	`task_id` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`user_id`),
+	INDEX `PROJECT_FK1` (`project_id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=10
+;
+CREATE TABLE `task` (
+	`task_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`parent_id` INT(11) NULL DEFAULT NULL,
+	`project_id` INT(11) NULL DEFAULT NULL,
+	`task` VARCHAR(50) NULL DEFAULT NULL,
+	`start_date` DATE NULL DEFAULT NULL,
+	`end_date` DATE NULL DEFAULT NULL,
+	`priority` INT(11) NULL DEFAULT NULL,
+	`status` VARCHAR(50) NULL DEFAULT NULL,
+	PRIMARY KEY (`task_id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=5
+;
+CREATE TABLE `project` (
+	`project_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`project` VARCHAR(50) NULL DEFAULT NULL,
+	`start_date` DATE NULL DEFAULT NULL,
+	`end_date` DATE NULL DEFAULT NULL,
+	`priority` INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (`project_id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=4
+;
+CREATE TABLE `parent_task` (
+	`parent_id` INT(11) NULL DEFAULT NULL,
+	`parent_task` VARCHAR(50) NULL DEFAULT NULL
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
