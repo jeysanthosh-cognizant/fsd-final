@@ -45,7 +45,7 @@ public class Task {
      */
 
     @ManyToOne
-    @JoinColumn(name="projectId",nullable=false,insertable=true,updatable=true)
+    @JoinColumn(name="projectId",nullable=true,insertable=true,updatable=true)
     private Project project;
 
     public long getTaskId() {
